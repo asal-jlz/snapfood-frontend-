@@ -36,3 +36,17 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# Java
+*.class
+*.jar
+*.war
+*.log
+
+# Maven
+
+# IDEs
+.idea/
+
+# OS files
+Thumbs.db

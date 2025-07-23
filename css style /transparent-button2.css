@@ -1,8 +1,8 @@
-.transparent-button {
+.transparent-button2 {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-border-color: transparent;
-    -fx-font-size: 15px;
+    -fx-font-size: 14px;
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-cursor: hand;
     -fx-underline: false;
@@ -12,5 +12,5 @@
 .transparent-button:hover {
     -fx-underline: true;
     -fx-font-weight: bold;
-    -fx-text-fill: #ffffff; 
+    -fx-text-fill: #000000; 
 }

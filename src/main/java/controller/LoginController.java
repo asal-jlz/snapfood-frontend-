@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
+import java.io.IOException;
 import java.net.http.*;
 import java.net.URI;
 import java.net.http.HttpRequest.BodyPublishers;
@@ -64,16 +66,18 @@ public class LoginController {
         }
     }
 
+
     @FXML
     void onSignUpClick(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxmls/SignUp.fxml"));
-            Stage stage = (Stage) signUpLink.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (Exception e) {
+            Parent signUpRoot = FXMLLoader.load(getClass().getResource("/fxmls/SignUp.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(signUpRoot));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
 
 
