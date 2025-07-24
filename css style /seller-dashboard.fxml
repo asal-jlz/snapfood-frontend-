@@ -14,12 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SellerDashboardController">
    <children>
       <ImageView fitHeight="408.0" fitWidth="606.0" layoutX="-3.0">
          <image>
-            <Image url="@../../Screenshot%201404-04-28%20at%2017.45.17.png" />
+            <Image url="@Screenshot%201404-04-28%20at%2017.45.17.png" />
          </image>
       </ImageView>
       <GridPane prefHeight="408.0" prefWidth="606.0">
@@ -36,7 +35,7 @@
                <children>
                   <AnchorPane prefHeight="60.0" prefWidth="459.0">
                      <children>
-                        <Label text="Welcome, Seller">
+                        <Label fx:id="welcomeLabel" text="Welcome, Seller">
                            <font>
                               <Font name="AppleGothic Regular" size="20.0" />
                            </font>
@@ -46,12 +45,12 @@
                         </Label>
                         <ImageView fitHeight="5.0" fitWidth="453.0" layoutY="56.0">
                            <image>
-                              <Image url="@../../Screenshot%201404-04-28%20at%2018.12.02.png" />
+                              <Image url="@Screenshot%201404-04-28%20at%2018.12.02.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="58.0" fitWidth="54.0" layoutX="399.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="restaurantLogo" fitHeight="58.0" fitWidth="54.0" layoutX="399.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Screenshot%201404-04-29%20at%2009.08.51.png" />
+                              <Image url="@Screenshot%201404-04-29%20at%2009.08.51.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="54.0" fitWidth="74.0" layoutX="6.0" pickOnBounds="true" preserveRatio="true" />
@@ -75,12 +74,12 @@
                         </Label>
                         <ImageView fitHeight="5.0" fitWidth="150.0" layoutY="57.0">
                            <image>
-                              <Image url="@../../Screenshot%201404-04-28%20at%2018.12.02.png" />
+                              <Image url="@Screenshot%201404-04-28%20at%2018.12.02.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="58.0" fitWidth="6.0" layoutX="147.0" layoutY="1.0">
                            <image>
-                              <Image url="@../../Screenshot%201404-04-28%20at%2018.12.02.png" />
+                              <Image url="@Screenshot%201404-04-28%20at%2018.12.02.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -98,17 +97,17 @@
                         </ImageView>
                         <ImageView fitHeight="353.0" fitWidth="6.0" layoutX="147.0">
                            <image>
-                              <Image url="@../../Screenshot%201404-04-28%20at%2018.12.02.png" />
+                              <Image url="@Screenshot%201404-04-28%20at%2018.12.02.png" />
                            </image>
                         </ImageView>
                         <VBox layoutY="3.0" prefHeight="350.0" prefWidth="147.0">
                            <children>
-                              <Button mnemonicParsing="false" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Add New Food Item">
+                              <Button fx:id="addFoodBtn" mnemonicParsing="false" onAction="#handleAddFood" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Add New Food Item" textAlignment="CENTER" wrapText="true">
                                  <VBox.margin>
                                     <Insets left="5.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Edit Menu">
+                              <Button fx:id="editMenuBtn" mnemonicParsing="false" onAction="#handleEditMenu" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Edit Menu">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -116,12 +115,12 @@
                                     <Insets left="30.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" styleClass="transparent-button" stylesheets="@transparent-button.css" text="View Orders">
+                              <Button fx:id="viewOrdersBtn" mnemonicParsing="false" onAction="#handleViewOrders" styleClass="transparent-button" stylesheets="@transparent-button.css" text="View Orders">
                                  <VBox.margin>
                                     <Insets left="25.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Edit Profile">
+                              <Button fx:id="editProfileBtn" mnemonicParsing="false" onAction="#handleEditProfile" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Edit Profile">
                                  <VBox.margin>
                                     <Insets left="25.0" top="20.0" />
                                  </VBox.margin>
@@ -134,13 +133,18 @@
             </VBox>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <TableView layoutX="12.0" layoutY="7.0" prefHeight="321.0" prefWidth="438.0" stylesheets="@dashboard.css">
+                  <TableView fx:id="foodTable" layoutX="12.0" layoutY="7.0" prefHeight="321.0" prefWidth="438.0" stylesheets="@dashboard.css">
                     <columns>
-                      <TableColumn prefWidth="85.0" text="Name" />
-                      <TableColumn prefWidth="75.0" text="Price" />
-                        <TableColumn prefWidth="85.0" text="Category" />
-                        <TableColumn prefWidth="120.0" text="Description" />
-                        <TableColumn prefWidth="75.0" text="Actions" />
+                      <TableColumn fx:id="nameCol" prefWidth="65.0" text="Name" />
+                      <TableColumn fx:id="priceCol" prefWidth="65.0" text="Price" />
+                        <TableColumn fx:id="categoryCol" prefWidth="75.0" text="Category" />
+                        <TableColumn fx:id="descriptionCol" prefWidth="90.0" text="Description" />
+                        <TableColumn fx:id="actionsCol" prefWidth="65.0" text="Actions" />
+                        <TableColumn fx:id="photoCol" prefWidth="75.0">
+                           <graphic>
+                              <Button fx:id="uploadPhotoBtn" mnemonicParsing="false" onAction="#handleUploadPhoto" text="photo" />
+                           </graphic>
+                        </TableColumn>
                     </columns>
                   </TableView>
                </children>
@@ -148,4 +152,4 @@
          </children>
       </GridPane>
    </children>
-</AnchorPane>
+</fx:root>
