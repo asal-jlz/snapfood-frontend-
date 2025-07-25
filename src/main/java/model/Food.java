@@ -15,10 +15,41 @@ public class Food {
         this.imageUrl = imageUrl;
     }
 
-    public String getImageUrl() { return imageUrl; }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-    public StringProperty nameProperty() { return name; }
-    public StringProperty priceProperty() { return price; }
-    public StringProperty categoryProperty() { return category; }
-    public StringProperty descriptionProperty() { return description; }
+    // ✅ JavaFX property accessors
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty priceProperty() {
+        return price;
+    }
+
+    public StringProperty categoryProperty() {
+        return category;
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    // ✅ Standard Java-style getters (fixes your errors)
+    public String getName() {
+        return name.get();
+    }
+
+    public String getPrice() {
+        return price.get();
+    }
+
+    public String getCategory() {
+        return category.get();
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
 }

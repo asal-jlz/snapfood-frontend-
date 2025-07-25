@@ -161,9 +161,10 @@
                         <Font name="Al Nile" size="14.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="85.0" top="10.0" />
+                        <Insets left="75.0" top="10.0" />
                      </HBox.margin>
                   </Button>
+                  <ImageView fx:id="profileImageView" layoutX="50.0" layoutY="50.0" fitWidth="50.0" fitHeight="50.0" />
                </children>
             </HBox>
          </children>

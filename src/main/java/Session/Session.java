@@ -1,11 +1,16 @@
 package Session;
 
+import model.Courier;
 import model.Seller;
 import model.User;
 
 public class Session {
-    private static User loggedInUser;
+    public static User loggedInUser;
     private static Seller currentSeller;
+    private static Courier currentCourier;
+    private static User user;
+
+
 
     public static void setUser(User user) {
         loggedInUser = user;
@@ -21,5 +26,12 @@ public class Session {
 
     public static Seller getCurrentSeller() {
         return currentSeller;
+    }
+    public static void setCurrentCourier(Courier courier) {
+        currentCourier = courier;
+    }
+
+    public static Courier getCurrentCourier() {
+        return currentCourier;
     }
 }

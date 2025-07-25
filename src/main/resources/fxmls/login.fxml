@@ -12,8 +12,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
@@ -68,7 +70,7 @@
                            <children>
                               <HBox layoutY="2.0" prefHeight="25.0" prefWidth="200.0">
                                  <children>
-                                    <TextField styleClass="transparent-textfield" stylesheets="@/css/textfeild1.css">
+                                    <TextField fx:id="phoneNumberField" styleClass="transparent-textfield" stylesheets="@/css/textfeild1.css">
                                        <HBox.margin>
                                           <Insets left="12.0" />
                                        </HBox.margin>
@@ -88,7 +90,7 @@
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <PasswordField styleClass="transparent-password" stylesheets="@/css/passwordField.css">
+                              <PasswordField fx:id="passwordField" styleClass="transparent-password" stylesheets="@/css/passwordField.css">
                                  <HBox.margin>
                                     <Insets left="12.0" />
                                  </HBox.margin>
@@ -99,7 +101,7 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="150.0" styleClass="login-button" stylesheets="@/css/login-button.css" text="Login">
+                        <Button  fx:id="loginButton"  onAction="#onLoginClick" mnemonicParsing="false" prefWidth="150.0" styleClass="login-button" stylesheets="@/css/login-button.css" text="Login">
                            <font>
                               <Font name="Apple SD Gothic Neo Regular" size="14.0" />
                            </font>
@@ -114,7 +116,7 @@
                                     <Insets left="20.0" top="3.0" />
                                  </padding>
                               </Label>
-                              <Hyperlink text="Sign up " />
+                              <Hyperlink fx:id="signupLink" onAction="#handleSignupLink" text="Sign up " />
                            </children>
                         </HBox>
                      </children>

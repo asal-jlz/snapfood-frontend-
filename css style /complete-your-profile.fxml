@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CompleteProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CompleteProfileController">
    <children>
       <GridPane prefHeight="400.0" prefWidth="600.0">
         <columnConstraints>
@@ -37,27 +37,6 @@
             </ImageView>
          </children>
       </GridPane>
-      <VBox layoutY="199.0" prefHeight="64.0" prefWidth="330.0">
-         <children>
-            <HBox prefHeight="36.0" prefWidth="330.0">
-               <children>
-                  <Label text="Account Number" textFill="WHITE">
-                     <font>
-                        <Font name="Apple SD Gothic Neo Regular" size="15.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="2.0" top="7.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="accountNumberField" styleClass="textfield2" stylesheets="@textfield2.css">
-                     <HBox.margin>
-                        <Insets left="9.0" top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
       <VBox prefHeight="53.0" prefWidth="330.0">
          <children>
             <Label text="Complete Your Profile " textFill="WHITE">
@@ -117,9 +96,30 @@
                   </TextField>
                </children>
             </HBox>
+            <VBox prefHeight="64.0" prefWidth="330.0">
+               <children>
+                  <HBox prefHeight="36.0" prefWidth="330.0">
+                     <children>
+                        <Label text="Account Number" textFill="WHITE">
+                           <font>
+                              <Font name="Apple SD Gothic Neo Regular" size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="2.0" top="7.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="accountNumberField" styleClass="textfield2" stylesheets="@textfield2.css">
+                           <HBox.margin>
+                              <Insets left="9.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </VBox>
-      <VBox layoutY="231.0" prefHeight="64.0" prefWidth="330.0">
+      <VBox fx:id="brandInfoSection" layoutY="231.0" prefHeight="64.0" prefWidth="330.0">
          <children>
             <Label text="Brand's name" textFill="WHITE">
                <font>
@@ -169,4 +169,4 @@
          </children>
       </VBox>
    </children>
-</fx:root>
+</AnchorPane>

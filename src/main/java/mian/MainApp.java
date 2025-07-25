@@ -10,12 +10,21 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        System.out.println("Trying to load /fxmls/login.fxml");
+        System.out.println(getClass().getResource("/fxmls/login.fxml"));
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxmls/login.fxml"));
+
+        System.out.println(getClass().getResource("/css/textfeild1.css"));
+        System.out.println(getClass().getResource("/css/passwordField.css"));
+        System.out.println(getClass().getResource("/css/login-button.css"));
+
         Scene scene = new Scene(root);
         scene.getStylesheets().addAll(
-                getClass().getResource("/css/textfield1.css").toExternalForm(),
-                getClass().getResource("/css/passwordField.css").toExternalForm(),
-                getClass().getResource("/css/login-button.css").toExternalForm()
+
+                getClass().getResource("/css/textfeild1.css").toExternalForm(),
+              getClass().getResource("/css/passwordField.css").toExternalForm(),
+               getClass().getResource("/css/login-button.css").toExternalForm()
         );
 
         primaryStage.setTitle("Snapfood - Login");
@@ -27,4 +36,3 @@ public class MainApp extends Application {
         launch(args);
     }
 }
-

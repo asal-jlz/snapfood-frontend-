@@ -34,6 +34,12 @@ public class BuyerDashboardController {
     @FXML private ImageView profileImageView;
 
     private double cartTotal = 0;
+    private User currentUser; // This is now initialized via setUserData()
+
+    public void setUserData(User user) {
+        this.currentUser = user;
+        updateUserUI(); // Optional UI update logic with provided user
+    }
 
     @FXML
     public void initialize() {
@@ -43,21 +49,32 @@ public class BuyerDashboardController {
         categoryListView.setOnMouseClicked(e -> loadFoodsByCategory());
         restaurantListView.setOnMouseClicked(e -> loadFoodsByRestaurant());
 
+        // Fallback to singleton user instance if not injected manually
+        if (currentUser == null) {
+            currentUser = User.getInstance(); // Optional fallback
+        }
 
-        String fullName = User.getInstance().getFullName(); // e.g., "Welcome, John"
-        String profileImagePath = User.getInstance().getProfileImagePath(); // e.g., "/path/to/image.png"
+        updateUserUI();
+    }
 
-        welcomeLabel.setText("Welcome, " + fullName);
+    private void updateUserUI() {
+        if (currentUser != null) {
+            String fullName = currentUser.getFullName();
+            welcomeLabel.setText("Welcome, " + fullName);
 
-        if (profileImagePath != null && new File(profileImagePath).exists()) {
-            profileImageView.setImage(new Image(new File(profileImagePath).toURI().toString()));
+            String profileImagePath = currentUser.getProfilePhotoPath();
+            if (profileImagePath != null && new File(profileImagePath).exists()) {
+                profileImageView.setImage(new Image(new File(profileImagePath).toURI().toString()));
+            }
+        } else {
+            System.err.println("User data not initialized properly.");
         }
     }
 
     @FXML
     private void onLogoutClicked() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxmls/login.fxml"));
             Stage stage = (Stage) logoutButton.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
@@ -68,7 +85,7 @@ public class BuyerDashboardController {
     @FXML
     private void onPaymentClicked() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/payment.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxmls/payment.fxml"));
             Stage stage = (Stage) goToPaymentButton.getScene().getWindow();
             stage.setScene(new Scene(root));
         } catch (IOException e) {
@@ -79,13 +96,24 @@ public class BuyerDashboardController {
     @FXML
     private void onEditProfileClicked() {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/UpdateYourProfile.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/UpdateYourProfile.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller for the update profile page
+            controller.UpdateProfileController controller = loader.getController();
+
+            // Pass current user data to update profile controller
+            controller.setUserData(currentUser);
+
+            // Set the scene
             Stage stage = (Stage) editProfileButton.getScene().getWindow();
             stage.setScene(new Scene(root));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void onSearch(KeyEvent event) {

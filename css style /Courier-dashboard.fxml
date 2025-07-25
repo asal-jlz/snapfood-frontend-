@@ -65,7 +65,7 @@
                   </ImageView>
                   <VBox prefHeight="348.0" prefWidth="132.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button mnemonicParsing="false" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Edit Profile ">
+                        <Button fx:id="editProfileButton" mnemonicParsing="false" onAction="#handleEditProfile" styleClass="transparent-button" stylesheets="@transparent-button.css" text="Edit Profile ">
                            <VBox.margin>
                               <Insets left="22.0" top="10.0" />
                            </VBox.margin>

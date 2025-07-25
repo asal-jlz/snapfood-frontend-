@@ -29,7 +29,7 @@
                   </ImageView>
                   <HBox prefHeight="54.0" prefWidth="600.0">
                      <children>
-                        <Button mnemonicParsing="false" styleClass="transparent-button2" stylesheets="@/css/transparent-button2.css" text="Log Out">
+                        <Button fx:id="logoutButton" onAction="#onLogoutClicked" mnemonicParsing="false" styleClass="transparent-button2" stylesheets="@/css/transparent-button2.css" text="Log Out">
                            <padding>
                               <Insets left="10.0" top="15.0" />
                            </padding>
@@ -77,7 +77,7 @@
                                    <VBox layoutX="-7.0" layoutY="0.0" spacing="10.0" prefWidth="132.0">
                                       <children>
                                          <ListView fx:id="categoryListView" prefHeight="250.0" prefWidth="132.0" />
-                                         <Button fx:id="editProfileButton" text="Edit Profile" onAction="#onEditProfileClicked" styleClass="transparent-button2" stylesheets="@/css/transparent-button2.css" />
+                                         <Button fx:id="editProfileButton"  text="Edit Profile" onAction="#onEditProfileClicked" styleClass="transparent-button2" stylesheets="@/css/transparent-button2.css" />
                                       </children>
                                    </VBox>
                                 </children>

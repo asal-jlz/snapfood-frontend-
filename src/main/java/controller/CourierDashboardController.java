@@ -12,11 +12,14 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import model.Courier;
 import model.Order;
 import model.User;
 import Session.Session;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -37,45 +40,83 @@ public class CourierDashboardController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @FXML
-    public void initialize() {
-        User courier = Session.getUser();
+    private Courier courier;
+    private User currentUser;
 
-        // Set welcome name
+    /**
+     * Inject user data from outside (e.g., after login).
+     * Accepts User, checks if Courier, then initializes UI.
+     */
+    public void setUserData(User user) {
+        if (user instanceof Courier c) {
+            this.courier = c;
+            Session.setCurrentCourier(c);  // Optional global session set
+            initializeUI();
+        } else {
+            System.err.println("Invalid user type for Courier Dashboard.");
+        }
+    }
+
+    /**
+     * Initialize UI elements based on courier object.
+     * Can be called from initialize() or setUserData.
+     */
+    private void initializeUI() {
+        if (courier == null) {
+            System.err.println("Courier is null during UI initialization.");
+            return;
+        }
+
         welcomeLabel.setText("Welcome, " + courier.getFullName());
-
-        // Set earnings
         monthlyEarningsLabel.setText("Monthly Earnings: $" + courier.getMonthlyEarnings());
 
-        // Load profile image
         try {
-            if (courier.getProfilePhotoPath() != null) {
-                File file = new File(courier.getProfilePhotoPath());
+            String photoPath = courier.getProfilePhotoPath();
+            if (photoPath != null) {
+                File file = new File(photoPath);
                 if (file.exists()) {
                     profileImageView.setImage(new Image(new FileInputStream(file)));
                 }
             }
         } catch (Exception e) {
-            System.out.println("Profile image load failed: " + e.getMessage());
+            System.err.println("Profile image load failed: " + e.getMessage());
         }
 
-        // Bind columns
+        // Setup table columns
         restaurantAddressCol.setCellValueFactory(data -> data.getValue().restaurantAddressProperty());
         buyerAddressCol.setCellValueFactory(data -> data.getValue().buyerAddressProperty());
         deliveryFeeCol.setCellValueFactory(data -> data.getValue().deliveryFeeProperty().asObject());
         statusCol.setCellValueFactory(data -> data.getValue().statusProperty());
 
-        // Fetch orders
         fetchOrdersFromBackend(courier.getId());
+    }
+
+    @FXML
+    public void initialize() {
+        // Try to load courier from Session if not set externally
+        if (courier == null) {
+            courier = Session.getCurrentCourier();
+        }
+        if (courier != null) {
+            initializeUI();
+        } else {
+            System.err.println("Courier not set on initialization.");
+        }
     }
 
     private void fetchOrdersFromBackend(String courierId) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://localhost:8080/api/orders/courier/" + courierId); // change this to your real endpoint
+                URL url = new URL("http://localhost:8080/api/orders/courier/" + courierId);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
-                connection.setRequestProperty("Authorization", "Bearer " + Session.getUser().getToken()); // if using JWT
+
+                // If using JWT auth
+                User currentUser = Session.getUser();
+                if (currentUser != null && currentUser.getToken() != null) {
+                    connection.setRequestProperty("Authorization", "Bearer " + currentUser.getToken());
+                }
+
                 connection.connect();
 
                 if (connection.getResponseCode() == 200) {
@@ -86,7 +127,7 @@ public class CourierDashboardController {
                         ordersTable.setItems(observableOrders);
                     });
                 } else {
-                    System.out.println("Failed to fetch orders: " + connection.getResponseCode());
+                    System.err.println("Failed to fetch orders: " + connection.getResponseCode());
                 }
 
                 connection.disconnect();
@@ -99,7 +140,8 @@ public class CourierDashboardController {
     @FXML
     private void handleLogout(javafx.event.ActionEvent event) throws IOException {
         Session.setUser(null);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+        Session.setCurrentCourier(null);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/Login.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -107,9 +149,21 @@ public class CourierDashboardController {
 
     @FXML
     private void handleEditProfile(javafx.event.ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UpdateYourProfile.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/UpdateYourProfile.fxml"));
         Scene scene = new Scene(loader.load());
+
+        UpdateProfileController controller = loader.getController();
+        if (courier != null) {
+            controller.setUserData(courier);
+        }
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+
+    }
+
+
+    public void setCourier(Courier courier) {
+        this.courier = courier;
     }
 }
