@@ -1,7 +1,9 @@
 package controller;
 
+import Session.Session;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +13,6 @@ import javafx.scene.Node;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import model.User;
-import Session.Session;
 
 import java.io.IOException;
 import java.net.URI;
@@ -46,8 +47,6 @@ public class SignUpController {
             return;
         }
 
-        final ActionEvent capturedEvent = event;
-
         try {
             HttpClient client = HttpClient.newHttpClient();
             String json = String.format(
@@ -60,6 +59,8 @@ public class SignUpController {
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
+
+            final ActionEvent capturedEvent = event;
 
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                     .thenAccept(response -> {
@@ -81,17 +82,14 @@ public class SignUpController {
                                 user.setAddress(addr);
                                 user.setRole(r);
 
-                                // Now login to get the token and proceed
                                 loginAfterRegistration(phone, password, capturedEvent, user);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                javafx.application.Platform.runLater(() -> showAlert("Failed to parse registration response."));
+                                Platform.runLater(() -> showAlert("Failed to parse registration response."));
                             }
                         } else {
-                            javafx.application.Platform.runLater(() -> {
-                                showAlert("Registration failed: " + response.body());
-                            });
+                            Platform.runLater(() -> showAlert("Registration failed: " + response.body()));
                         }
                     });
 
@@ -129,8 +127,9 @@ public class SignUpController {
 
                                 user.setToken(token);
                                 Session.setUser(user);
+                                Session.setToken(token);
 
-                                javafx.application.Platform.runLater(() -> {
+                                Platform.runLater(() -> {
                                     try {
                                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/complete-your-profile.fxml"));
                                         Parent root = loader.load();
@@ -139,6 +138,7 @@ public class SignUpController {
                                         controller.setUser(user);
                                         controller.setRole(user.getRole());
                                         controller.setToken(token);
+                                        controller.setPlainPassword(password);
 
                                         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                                         stage.setScene(new Scene(root));
@@ -155,7 +155,7 @@ public class SignUpController {
                                 showAlert("Failed to parse login response.");
                             }
                         } else {
-                            javafx.application.Platform.runLater(() -> {
+                            Platform.runLater(() -> {
                                 showAlert("Login failed after registration: " + loginResponse.body());
                             });
                         }
@@ -168,7 +168,7 @@ public class SignUpController {
     }
 
     private void showAlert(String message) {
-        javafx.application.Platform.runLater(() -> {
+        Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Validation Error");
             alert.setContentText(message);

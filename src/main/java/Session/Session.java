@@ -9,6 +9,7 @@ public class Session {
     private static Seller currentSeller;
     private static Courier currentCourier;
     private static User user;
+    private static String token;
 
 
 
@@ -33,5 +34,13 @@ public class Session {
 
     public static Courier getCurrentCourier() {
         return currentCourier;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String t) {
+        token = t;
     }
 }

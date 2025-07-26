@@ -40,6 +40,9 @@ public class UpdateProfileController {
 
     public void setUserData(User user) {
         this.currentUser = user;
+        if(user==null){
+            throw new IllegalArgumentException("UpdateProfileController: passed user is null");
+        }
 
         // Fill initial user info
         fullNameField.setText(user.getFullName());

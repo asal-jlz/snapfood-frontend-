@@ -13,6 +13,10 @@ public class User {
     private String role;
     private BankInfo bankInfo;
     private String profileImageBase64;
+    private String brandName;
+    private String logoUrl;
+    private String shortDescription;
+    private String salt;
 
     public User() {}
 
@@ -47,5 +51,20 @@ public class User {
     public void setBankInfo(BankInfo bankInfo) { this.bankInfo = bankInfo; }
     public String getProfileImageBase64() { return profileImageBase64; }
     public void setProfileImageBase64(String base64) { this.profileImageBase64 = base64; }
+
+    public String getBrandName() { return brandName; }
+    public void setBrandName(String brandName) { this.brandName = brandName; }
+
+    public String getLogoUrl() { return logoUrl; }
+    public void setLogoUrl(String logoUrl) { this.logoUrl = logoUrl; }
+
+    public String getShortDescription() { return shortDescription; }
+    public void setShortDescription(String shortDescription) { this.shortDescription = shortDescription; }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+
 }
 
